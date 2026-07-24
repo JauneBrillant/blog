@@ -1,0 +1,2 @@
+- Building this personal site with Astro
+- Learning and writing about web development

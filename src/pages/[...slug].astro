@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import Layout from "../layouts/Layout.astro";
 
 export async function getStaticPaths() {
     const posts = await getCollection("blog");
@@ -11,19 +12,48 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await render(post);
+const home = `${import.meta.env.BASE_URL}/`;
 ---
 
-<html lang="ja">
-    <head>
-        <meta charset="utf-8" />
-        <title>{post.data.title}</title>
-    </head>
-    <body>
-        <h1>{post.data.title}</h1>
-        <p>投稿日: {post.data.pubDate}</p>
-        <hr />
-        <main>
+<Layout title={post.data.title} description={post.data.title}>
+    <article>
+        <header class="post-header">
+            <h1>{post.data.title}</h1>
+            <time class="post-date">{post.data.pubDate}</time>
+        </header>
+        <div class="prose">
             <Content />
-        </main>
-    </body>
-</html>
+        </div>
+    </article>
+    <p class="back-link"><a href={home}>&larr; 記事一覧に戻る</a></p>
+</Layout>
+
+<style>
+    .post-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .post-header h1 {
+        font-size: 1.6rem;
+        margin: 0 0 0.5rem;
+    }
+
+    .post-date {
+        font-size: 0.85rem;
+        color: var(--color-muted);
+    }
+
+    .back-link {
+        margin-top: 3rem;
+        font-size: 0.9rem;
+    }
+
+    .back-link a {
+        text-decoration: underline;
+        text-decoration-color: var(--color-border);
+    }
+
+    .back-link a:hover {
+        text-decoration-color: currentColor;
+    }
+</style>

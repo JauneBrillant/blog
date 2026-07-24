@@ -10,4 +10,14 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { blog };
+const now = defineCollection({
+  loader: glob({ pattern: "**/*.{md, mdx}", base: "./src/content/now" }),
+  schema: z.object({}),
+});
+
+const roadmap = defineCollection({
+  loader: glob({ pattern: "**/*.{md, mdx}", base: "./src/content/roadmap" }),
+  schema: z.object({}),
+});
+
+export const collections = { blog, now, roadmap };
