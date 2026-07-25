@@ -129,7 +129,15 @@ hr {
 .entry-title {
     display: inline-flex;
     align-items: baseline;
-    gap: 0.5rem;
+    gap: 0.3rem;
+}
+
+.entry-meta {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    flex-shrink: 0;
+    margin-left: 1rem;
 }
 
 .entry-type {

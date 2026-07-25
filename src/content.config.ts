@@ -11,15 +11,18 @@ const writing = defineCollection({
   }),
 });
 
-const learning = defineCollection({
-  loader: glob({ pattern: "**/*.{md, mdx}", base: "./src/content/learning" }),
+const challenge = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md, mdx}",
+    base: "./src/content/challenge",
+  }),
   schema: z.object({
     title: z.string(),
-    type: z.enum(["book", "challenge"]).default("book"),
+    type: z.array(z.enum(["book", "challenge", "coding"])).min(1),
     status: z.enum(["future", "now", "done"]),
     startedAt: z.string().optional(),
     finishedAt: z.string().optional(),
   }),
 });
 
-export const collections = { writing, learning };
+export const collections = { writing, challenge };
