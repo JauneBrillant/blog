@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
  * locally, but are never included in the built/deployed site.
  */
 export async function getPublishedPosts() {
-    return getCollection("blog", ({ data }) => {
+    return getCollection("writing", ({ data }) => {
         return import.meta.env.PROD ? data.draft !== true : true;
     });
 }
