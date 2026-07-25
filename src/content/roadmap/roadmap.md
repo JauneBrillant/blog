@@ -1,3 +1,0 @@
-- Organize posts into categories
-- Set up OGP images
-- Add a comments feature

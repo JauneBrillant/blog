@@ -11,14 +11,15 @@ const blog = defineCollection({
   }),
 });
 
-const now = defineCollection({
-  loader: glob({ pattern: "**/*.{md, mdx}", base: "./src/content/now" }),
-  schema: z.object({}),
+const learning = defineCollection({
+  loader: glob({ pattern: "**/*.{md, mdx}", base: "./src/content/learning" }),
+  schema: z.object({
+    title: z.string(),
+    type: z.enum(["book", "challenge"]).default("book"),
+    status: z.enum(["future", "now", "done"]),
+    startedAt: z.string().optional(),
+    finishedAt: z.string().optional(),
+  }),
 });
 
-const roadmap = defineCollection({
-  loader: glob({ pattern: "**/*.{md, mdx}", base: "./src/content/roadmap" }),
-  schema: z.object({}),
-});
-
-export const collections = { blog, now, roadmap };
+export const collections = { blog, learning };

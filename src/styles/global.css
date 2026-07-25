@@ -1,19 +1,21 @@
 :root {
-    --color-bg: #ffffff;
-    --color-text: #171717;
-    --color-muted: #6b6b6b;
-    --color-border: #e5e5e5;
-    --color-code-bg: #f2f2f2;
+    --color-bg: #e0e0e0;
+    --color-text: #141414;
+    --color-accent: #646464;
+    --color-muted: rgba(20, 20, 20, 0.65);
+    --color-border: #c8c8c8;
+    --color-code-bg: #bebebe;
     --max-width: 640px;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-bg: #0a0a0a;
-        --color-text: #ededed;
-        --color-muted: #a0a0a0;
-        --color-border: #2a2a2a;
-        --color-code-bg: #1a1a1a;
+        --color-bg: #1e1e1e;
+        --color-text: #f0f0f0;
+        --color-accent: #f0f0f0;
+        --color-muted: rgba(240, 240, 240, 0.65);
+        --color-border: #646464;
+        --color-code-bg: #000000;
     }
 }
 
@@ -30,8 +32,8 @@ body {
 body {
     background: var(--color-bg);
     color: var(--color-text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Helvetica, Arial, sans-serif;
+    font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
@@ -44,6 +46,7 @@ a {
 }
 
 a:hover {
+    color: var(--color-accent);
     text-decoration: underline;
 }
 
@@ -64,6 +67,87 @@ hr {
     border: none;
     border-top: 1px solid var(--color-border);
     margin: 2rem 0;
+}
+
+/* Shared section layout used across pages */
+.section + .section {
+    margin-top: 3rem;
+}
+
+.section h2 {
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-muted);
+    margin: 0 0 1.25rem;
+}
+
+.section h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-muted);
+    margin: 0 0 0.85rem;
+    padding-left: 0.75rem;
+}
+
+.section-lead {
+    color: var(--color-muted);
+    margin: 0 0 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.entry-list {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0 0 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.entry-list:last-child {
+    margin-bottom: 0;
+}
+
+.entry-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.entry-item a {
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+}
+
+.entry-item a:hover {
+    text-decoration-color: currentColor;
+}
+
+.entry-title {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+
+.entry-type {
+    font-size: 0.7rem;
+    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.05rem 0.5rem;
+    white-space: nowrap;
+}
+
+.entry-date {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--color-muted);
+    white-space: nowrap;
+    margin-left: 1rem;
 }
 
 /* Prose styles for rendered Markdown content */
@@ -95,7 +179,8 @@ hr {
     padding: 0.15em 0.4em;
     border-radius: 4px;
     font-size: 0.9em;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo,
+        Consolas, monospace;
 }
 
 .prose pre {
