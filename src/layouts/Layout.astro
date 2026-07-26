@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import RunningBadge from "../components/RunningBadge.astro";
 
 interface Props {
     title: string;
@@ -31,6 +32,7 @@ const { title, description = "個人ブログ" } = Astro.props;
                 <p>&copy; takahiro hagiuda</p>
             </footer>
         </div>
+        <RunningBadge />
     </body>
 </html>
 
