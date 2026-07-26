@@ -70,14 +70,13 @@ body {
 
 a {
     color: inherit;
-    text-decoration: underline;
-    text-decoration-color: transparent;
-    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    text-decoration: none;
+    transition: color 0.15s ease;
 }
 
 a:hover {
     color: var(--color-accent);
-    text-decoration-color: currentColor;
+    text-decoration: underline;
 }
 
 h1,
@@ -187,7 +186,6 @@ hr {
     border-radius: 999px;
     background: var(--color-border);
     overflow: hidden;
-    text-decoration: none;
 }
 
 .entry-gauge-fill {
