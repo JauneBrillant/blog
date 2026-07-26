@@ -24,7 +24,7 @@ const sortedChallengeEntries = [...challengeEntries].sort((a, b) => {
 
 <Layout title="takahiro hagiuda" description="日々の記録や学びを書いています。">
     <section class="section">
-        <h2>Writing</h2>
+        <h2>執筆</h2>
         <ul class="entry-list">
             {
                 posts.map((post) => (
@@ -40,24 +40,26 @@ const sortedChallengeEntries = [...challengeEntries].sort((a, b) => {
     </section>
 
     <section class="section">
-        <h2>Challenge</h2>
+        <h2>取り組み</h2>
 
         <ul class="entry-list">
-            {sortedChallengeEntries.map((entry) => (
-                <li class="entry-item">
-                    <a
-                        class="entry-title"
-                        href={`${import.meta.env.BASE_URL}/challenge/${entry.id}/`}
-                    >
-                        {entry.data.title}
-                    </a>
-                    <span class="entry-meta">
-                        {entry.data.type.map((t) => (
-                            <span class="entry-type">{typeLabel[t]}</span>
-                        ))}
-                    </span>
-                </li>
-            ))}
+            {
+                sortedChallengeEntries.map((entry) => (
+                    <li class="entry-item">
+                        <a
+                            class="entry-title"
+                            href={`${import.meta.env.BASE_URL}/challenge/${entry.id}/`}
+                        >
+                            {entry.data.title}
+                        </a>
+                        <span class="entry-meta">
+                            {entry.data.type.map((t) => (
+                                <span class="entry-type">{typeLabel[t]}</span>
+                            ))}
+                        </span>
+                    </li>
+                ))
+            }
         </ul>
     </section>
 </Layout>
