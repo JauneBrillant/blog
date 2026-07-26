@@ -19,6 +19,34 @@
     }
 }
 
+/* Figtree renders visually smaller than M PLUS 1 at the same font-size;
+   size-adjust scales it up so Latin and Japanese text feel consistent. */
+@font-face {
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 300 900;
+    font-display: swap;
+    size-adjust: 110%;
+    src: url(https://fonts.gstatic.com/s/figtree/v9/_Xms-HUzqDCFdgfMm4S9DaRvzig.woff2)
+        format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+        U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Figtree";
+    font-style: italic;
+    font-weight: 300 900;
+    font-display: swap;
+    size-adjust: 110%;
+    src: url(https://fonts.gstatic.com/s/figtree/v9/_Xmu-HUzqDCFdgfMm4GND65o7Cqcsw.woff2)
+        format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+        U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -32,8 +60,8 @@ body {
 body {
     background: var(--color-bg);
     color: var(--color-text);
-    font-family: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Figtree", "M PLUS 1", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 16px;
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
@@ -42,12 +70,14 @@ body {
 
 a {
     color: inherit;
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
 a:hover {
     color: var(--color-accent);
-    text-decoration: underline;
+    text-decoration-color: currentColor;
 }
 
 h1,
@@ -117,15 +147,6 @@ hr {
     gap: 1rem;
 }
 
-.entry-item a {
-    text-decoration: underline;
-    text-decoration-color: var(--color-border);
-}
-
-.entry-item a:hover {
-    text-decoration-color: currentColor;
-}
-
 .entry-title {
     display: inline-flex;
     align-items: center;
@@ -166,6 +187,7 @@ hr {
     border-radius: 999px;
     background: var(--color-border);
     overflow: hidden;
+    text-decoration: none;
 }
 
 .entry-gauge-fill {
@@ -209,15 +231,6 @@ hr {
 
 .prose li {
     margin-bottom: 0.4rem;
-}
-
-.prose a {
-    text-decoration: underline;
-    text-decoration-color: var(--color-border);
-}
-
-.prose a:hover {
-    text-decoration-color: currentColor;
 }
 
 .prose code {

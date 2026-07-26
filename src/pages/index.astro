@@ -43,36 +43,21 @@ const sortedChallengeEntries = [...challengeEntries].sort((a, b) => {
         <h2>Challenge</h2>
 
         <ul class="entry-list">
-            {sortedChallengeEntries.map((entry) => {
-                const { done, total } = progress(entry);
-                const percent = Math.round((done / total) * 100);
-                return (
-                    <li class="entry-item">
-                        <a
-                            class="entry-title"
-                            href={`${import.meta.env.BASE_URL}/challenge/${entry.id}/`}
-                        >
-                            <span
-                                class="entry-gauge"
-                                title={`${done}/${total}`}
-                            >
-                                <span
-                                    class="entry-gauge-fill"
-                                    style={`width: ${percent}%`}
-                                />
-                            </span>
-                            {entry.data.title}
-                        </a>
-                        <span class="entry-meta">
-                            {entry.data.type.map((t) => (
-                                <span class="entry-type">
-                                    {typeLabel[t]}
-                                </span>
-                            ))}
-                        </span>
-                    </li>
-                );
-            })}
+            {sortedChallengeEntries.map((entry) => (
+                <li class="entry-item">
+                    <a
+                        class="entry-title"
+                        href={`${import.meta.env.BASE_URL}/challenge/${entry.id}/`}
+                    >
+                        {entry.data.title}
+                    </a>
+                    <span class="entry-meta">
+                        {entry.data.type.map((t) => (
+                            <span class="entry-type">{typeLabel[t]}</span>
+                        ))}
+                    </span>
+                </li>
+            ))}
         </ul>
     </section>
 </Layout>
