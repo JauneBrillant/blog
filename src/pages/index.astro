@@ -1,7 +1,8 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
 import { getPublishedPosts } from "../lib/posts";
+import { progress, typeLabel } from "../lib/challenge";
 
 const posts = await getPublishedPosts();
 posts.sort(
@@ -11,20 +12,14 @@ posts.sort(
 
 const challengeEntries = await getCollection("challenge");
 
-const byDate = (dateStr?: string) =>
-    dateStr ? new Date(dateStr).getTime() : 0;
-
-const now = challengeEntries.filter((e) => e.data.status === "now");
-const future = challengeEntries.filter((e) => e.data.status === "future");
-const done = challengeEntries
-    .filter((e) => e.data.status === "done")
-    .sort((a, b) => byDate(b.data.finishedAt) - byDate(a.data.finishedAt));
-
-const typeLabel: Record<string, string> = {
-    book: "Book",
-    challenge: "Challenge",
-    coding: "Coding",
-};
+const sortedChallengeEntries = [...challengeEntries].sort((a, b) => {
+    const pa = progress(a);
+    const pb = progress(b);
+    const ratioDiff = pb.done / pb.total - pa.done / pa.total;
+    return ratioDiff !== 0
+        ? ratioDiff
+        : a.data.title.localeCompare(b.data.title);
+});
 ---
 
 <Layout title="takahiro hagiuda" description="日々の記録や学びを書いています。">
@@ -47,77 +42,37 @@ const typeLabel: Record<string, string> = {
     <section class="section">
         <h2>Challenge</h2>
 
-        {
-            now.length > 0 && (
-                <>
-                    <h3>Now</h3>
-                    <ul class="entry-list">
-                        {now.map((entry) => (
-                            <li class="entry-item">
-                                <span class="entry-title">
-                                    {entry.data.title}
-                                </span>
-                                <span class="entry-meta">
-                                    {entry.data.type.map((t) => (
-                                        <span class="entry-type">
-                                            {typeLabel[t]}
-                                        </span>
-                                    ))}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                </>
-            )
-        }
-
-        {
-            future.length > 0 && (
-                <>
-                    <h3>Future</h3>
-                    <ul class="entry-list">
-                        {future.map((entry) => (
-                            <li class="entry-item">
-                                <span class="entry-title">
-                                    {entry.data.title}
-                                </span>
-                                <span class="entry-meta">
-                                    {entry.data.type.map((t) => (
-                                        <span class="entry-type">
-                                            {typeLabel[t]}
-                                        </span>
-                                    ))}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                </>
-            )
-        }
-
-        <h3>Done</h3>
-        {
-            done.length === 0 ? (
-                <p class="section-lead">まだありません。</p>
-            ) : (
-                <ul class="entry-list">
-                    {done.map((entry) => (
-                        <li class="entry-item">
-                            <span class="entry-title">{entry.data.title}</span>
-                            <span class="entry-meta">
-                                {entry.data.type.map((t) => (
-                                    <span class="entry-type">
-                                        {typeLabel[t]}
-                                    </span>
-                                ))}
-                                <time class="entry-date">
-                                    {entry.data.finishedAt}
-                                </time>
+        <ul class="entry-list">
+            {sortedChallengeEntries.map((entry) => {
+                const { done, total } = progress(entry);
+                const percent = Math.round((done / total) * 100);
+                return (
+                    <li class="entry-item">
+                        <a
+                            class="entry-title"
+                            href={`${import.meta.env.BASE_URL}/challenge/${entry.id}/`}
+                        >
+                            <span
+                                class="entry-gauge"
+                                title={`${done}/${total}`}
+                            >
+                                <span
+                                    class="entry-gauge-fill"
+                                    style={`width: ${percent}%`}
+                                />
                             </span>
-                        </li>
-                    ))}
-                </ul>
-            )
-        }
+                            {entry.data.title}
+                        </a>
+                        <span class="entry-meta">
+                            {entry.data.type.map((t) => (
+                                <span class="entry-type">
+                                    {typeLabel[t]}
+                                </span>
+                            ))}
+                        </span>
+                    </li>
+                );
+            })}
+        </ul>
     </section>
 </Layout>

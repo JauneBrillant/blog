@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import BackLink from "../components/BackLink.astro";
 import { getPublishedPosts } from "../lib/posts";
 
 export async function getStaticPaths() {
@@ -26,7 +27,7 @@ const home = `${import.meta.env.BASE_URL}/`;
             <Content />
         </div>
     </article>
-    <p class="back-link"><a href={home}>&larr; 記事一覧に戻る</a></p>
+    <BackLink href={home} />
 </Layout>
 
 <style>
@@ -42,19 +43,5 @@ const home = `${import.meta.env.BASE_URL}/`;
     .post-date {
         font-size: 0.85rem;
         color: var(--color-muted);
-    }
-
-    .back-link {
-        margin-top: 3rem;
-        font-size: 0.9rem;
-    }
-
-    .back-link a {
-        text-decoration: underline;
-        text-decoration-color: var(--color-border);
-    }
-
-    .back-link a:hover {
-        text-decoration-color: currentColor;
     }
 </style>

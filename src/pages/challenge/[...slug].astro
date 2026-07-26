@@ -1,0 +1,110 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import BackLink from "../../components/BackLink.astro";
+import { progress, typeLabel } from "../../lib/challenge";
+
+export async function getStaticPaths() {
+    const entries = await getCollection("challenge");
+    return entries.map((entry) => ({
+        params: { slug: entry.id },
+        props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { done, total } = progress(entry);
+const percent = Math.round((done / total) * 100);
+const home = `${import.meta.env.BASE_URL}/`;
+---
+
+<Layout title={entry.data.title} description={entry.data.title}>
+    <article>
+        <header class="challenge-header">
+            <h1>{entry.data.title}</h1>
+            <div class="challenge-meta">
+                {
+                    entry.data.type.map((t) => (
+                        <span class="entry-type">{typeLabel[t]}</span>
+                    ))
+                }
+                <span class="entry-gauge" title={`${done}/${total}`}>
+                    <span
+                        class="entry-gauge-fill"
+                        style={`width: ${percent}%`}
+                    />
+                </span>
+                <span class="challenge-progress-label">
+                    {done}/{total}
+                </span>
+            </div>
+        </header>
+
+        <ul class="step-list">
+            {
+                entry.data.steps.map((step) => (
+                    <li class="step-item" data-done={step.done}>
+                        <span class="step-marker" aria-hidden="true">
+                            {step.done ? "✓" : ""}
+                        </span>
+                        <span class="step-title">{step.title}</span>
+                    </li>
+                ))
+            }
+        </ul>
+
+        <div class="prose">
+            <Content />
+        </div>
+    </article>
+    <BackLink href={home} />
+</Layout>
+
+<style>
+    .challenge-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .challenge-header h1 {
+        font-size: 1.6rem;
+        margin: 0 0 0.75rem;
+    }
+
+    .challenge-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .challenge-progress-label {
+        font-size: 0.8rem;
+        color: var(--color-muted);
+    }
+
+    .step-list {
+        list-style: none;
+        margin: 0 0 2rem;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .step-item {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+    }
+
+    .step-marker {
+        flex-shrink: 0;
+        width: 1rem;
+        text-align: center;
+        color: var(--color-accent);
+    }
+
+    .step-item[data-done="false"] .step-title {
+        color: var(--color-muted);
+    }
+</style>

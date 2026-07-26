@@ -19,9 +19,14 @@ const challenge = defineCollection({
   schema: z.object({
     title: z.string(),
     type: z.array(z.enum(["book", "challenge", "coding"])).min(1),
-    status: z.enum(["future", "now", "done"]),
-    startedAt: z.string().optional(),
-    finishedAt: z.string().optional(),
+    steps: z
+      .array(
+        z.object({
+          title: z.string(),
+          done: z.boolean().default(false),
+        }),
+      )
+      .min(1),
   }),
 });
 

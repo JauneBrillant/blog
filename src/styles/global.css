@@ -128,8 +128,8 @@ hr {
 
 .entry-title {
     display: inline-flex;
-    align-items: baseline;
-    gap: 0.3rem;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .entry-meta {
@@ -156,6 +156,44 @@ hr {
     color: var(--color-muted);
     white-space: nowrap;
     margin-left: 1rem;
+}
+
+.entry-gauge {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 2.75rem;
+    height: 0.3rem;
+    border-radius: 999px;
+    background: var(--color-border);
+    overflow: hidden;
+}
+
+.entry-gauge-fill {
+    display: block;
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: 999px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin-top: 3rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    font-size: 1.1rem;
+    line-height: 1;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.back-link:hover {
+    background: var(--color-border);
+    color: var(--color-text);
+    text-decoration: none;
 }
 
 /* Prose styles for rendered Markdown content */

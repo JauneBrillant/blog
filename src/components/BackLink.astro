@@ -1,0 +1,12 @@
+---
+interface Props {
+    href: string;
+    label?: string;
+}
+
+const { href, label = "一覧に戻る" } = Astro.props;
+---
+
+<a class="back-link" href={href} aria-label={label} title={label}>
+    <span aria-hidden="true">&larr;</span>
+</a>
